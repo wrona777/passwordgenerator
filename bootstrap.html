@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Title</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd" crossorigin="anonymous">
+  <!-- Bootstrap CSS v5.2.1 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+</head>
+
+
+<script>
+  $(function(){
+  $("#copy").click(function(){
+    navigator.clipboard.writeText($("#password").val())
+  });
+
+  $("#lenght2").on("input", function(e){
+     $("#lenght1").val($(this).val());
+  });
+
+  $("#lenght1").on("input", function(e){
+     $("#lenght2").val($(this).val());
+  });
+
+const duze = Array.from({ length: 26 }, (_, i) => String.fromCharCode('A'.charCodeAt(0) + i));
+
+const male = Array.from({ length: 26 }, (_, i) => String.fromCharCode('a'.charCodeAt(0) + i));
+
+const specjalne = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '=', '+', '[', ']', '{', '}', ';', ':', "'", '"', ',', '.', '<', '>', '/', '?', '|', '\\'];
+
+const cyfry = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+
+
+$.extend({
+    shuffle: function (array) {
+        for (var i = array.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+        }
+        return array;
+    }
+});
+
+  $("#generate").click(function(){
+    var tablica = [];
+    if($("#malelitery").is(":checked")){
+      $.merge(tablica, male);
+
+    }if($("#duzelitery").is(":checked")){
+      $.merge(tablica, duze);
+
+    }if($("#cyfry").is(":checked")){
+      $.merge(tablica, cyfry);
+
+    }if($("#znakispec").is(":checked")){
+      $.merge(tablica, specjalne);
+
+    }
+    $.shuffle(tablica);
+    ln = $("#lenght1").val();
+
+    tablica.length = ln;
+    tablica = tablica.toString();
+    tablica = tablica.replaceAll(",", "");
+    $("#password").val(tablica);
+    console.log(tablica);
+    if(tablica.length == 0){
+      $("#password").val("zaznacz przynajmniej 1 opcje");
+      console.log(tablica.length)
+      
+    }
+
+  })
+
+
+});
+</script>
+
+
+<body class="bg-primary">
+  <header>
+
+  </header>
+  <main>
+    <div class="container fst-italic">
+      <div class="card text-center fs-5">
+        <h1>Password generator</h1>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-11"><input type="text" class="form-control" id="password"></div>
+            <div class="col-1"><button class="btn btn-warning float-left" id=copy><i class="bi bi-arrow-through-heart"></i></button></div>
+          </div><br>
+          <div class="row">
+            <div class="col-md-6 col-sm-12 text-end">Długość hasła</div>
+            <div class="col-md-4 col-sm-12 text-start"><input type="number" min="1" max="20" class="form-control" id="lenght1"></div>
+          </div>
+          <div class="row">
+            <a href="" class="col-6"></a>
+            <br>
+            <input type="range" min="1" max="20" class="col-md-4" id="lenght2">
+          </div>
+          
+          <div class="row">
+            <div class="form-check form-switch col-md-6 col-sm-3 d-flex text-center float-">
+              <input class="form-check-input text-end" type="checkbox" id="duzelitery">
+              <label class="form-check-label mx-2" for="duzelitery">Duże litery</label>
+            </div>
+            <div class="form-check form-switch col-md-6 col-sm-3 d-flex  text-center">
+              <input class="form-check-input" type="checkbox" id="malelitery">
+              <label class="form-check-label mx-2" for="malelitery">Małe litery</label>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-check form-switch col-md-6 col-sm-3 d-flex text-center">
+              <input class="form-check-input" type="checkbox" id="cyfry">
+              <label class="form-check-label mx-2" for="cyfry">Cyfry</label>
+            </div>
+            <div class="form-check form-switch col-md-6 col-sm-3 d-flex text-center">
+              <input class="form-check-input" type="checkbox" id="znakispec">
+              <label class="form-check-label mx-2" for="znakispec">Znaki specjalne</label>
+            </div>
+          </div>
+
+          <a class="btn btn-primary" id="generate">Generuj</a>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer>
+
+  </footer>
+
+
+
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+    </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+    integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+    </script>
+</body>
+
+</html>
